@@ -47,7 +47,20 @@ L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/256/{z}/{x}/
       icon: L.divIcon({ className: '', html: el.outerHTML, iconSize: [40, 40] })
     })
     .addTo(map)
-    .bindPopup(`<b>Aurora avvistata</b><br>${aurora.description || 'Nessuna descrizione'}`);
+    .bindPopup(`
+  <div style="font-family:'Inter',sans-serif; min-width:150px;">
+    <div style="color:#34d399; font-weight:600; margin-bottom:4px;">
+      🌌 Aurora spotted
+    </div>
+    <div style="color:#a78bfa; font-size:12px; margin-bottom:6px;">
+      ⏱ ${aurora.minutes_ago === 0 ? 'Just now' : aurora.minutes_ago + ' min ago'}
+    </div>
+    ${aurora.description
+      ? `<div style="color:#ffffff; font-size:13px;">${aurora.description}</div>`
+      : `<div style="color:#6b7280; font-size:12px; font-style:italic;">No description added</div>`
+    }
+  </div>
+`);
   });
 
   if (navigator.geolocation) {

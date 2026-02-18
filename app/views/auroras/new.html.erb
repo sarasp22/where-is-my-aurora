@@ -9,7 +9,6 @@
 
   <%= form_with model: @aurora, url: auroras_path, local: true, html: { multipart: true, class: "aurora-form" } do |f| %>
 
-    <!-- Posizione -->
     <div class="form-card">
       <div class="form-label">📍 Location</div>
       <div class="location-display">
@@ -19,7 +18,6 @@
       <%= f.hidden_field :longitude, value: @lng, id: "aurora_longitude" %>
     </div>
 
-    <!-- Descrizione -->
     <div class="form-card">
       <div class="form-label">📝 Description (optional)</div>
       <%= f.text_area :description,
@@ -28,12 +26,10 @@
           rows: 3 %>
     </div>
 
-    <!-- Foto -->
 <div class="form-card">
   <div class="form-label">📸 Photo (optional)</div>
 
   <div class="photo-buttons">
-    <!-- Scatta foto con fotocamera -->
     <input type="file" name="aurora[photo]" id="aurora_photo_camera"
            accept="image/*" capture="environment"
            class="photo-input" onchange="previewPhoto(this)">
@@ -42,7 +38,6 @@
       <span>Take Photo</span>
     </label>
 
-    <!-- Scegli dalla galleria -->
     <input type="file" name="aurora[photo]" id="aurora_photo_gallery"
            accept="image/*"
            class="photo-input" onchange="previewPhoto(this)">
@@ -55,7 +50,6 @@
   <img id="photo-preview" src="" style="display:none;" >
 </div>
 
-    <!-- Submit -->
     <button type="submit" class="submit-btn">
       🌌 Report Aurora
     </button>
@@ -65,7 +59,6 @@
 </div>
 
 <script>
-  // Geolocalizzazione precisa
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(pos => {
       const lat = pos.coords.latitude;
@@ -80,7 +73,6 @@
     });
   }
 
-  // Preview foto
   function previewPhoto(input) {
     if (input.files && input.files[0]) {
       const reader = new FileReader();
