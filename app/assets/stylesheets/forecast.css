@@ -1,0 +1,128 @@
+/* FORECAST */
+.forecast-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid #7c3aed;
+  border-radius: 20px;
+  padding: 24px;
+  backdrop-filter: blur(10px);
+  margin-bottom: 16px;
+}
+
+.forecast-label {
+  font-size: 12px;
+  color: #a78bfa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.kp-big {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 64px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.kp-high { color: #34d399; }
+.kp-medium { color: #f59e0b; }
+.kp-low { color: #6b7280; }
+
+.kp-advice {
+  text-align: center;
+  font-size: 14px;
+}
+
+/* CLOUD BAR */
+.cloud-bar-container {
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px;
+  height: 12px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.cloud-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #7c3aed, #a78bfa);
+  border-radius: 20px;
+  transition: width 0.5s ease;
+}
+
+.cloud-value {
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* KP HISTORY CHART */
+.kp-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 80px;
+}
+
+.kp-bar-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  gap: 2px;
+}
+
+.kp-bar {
+  width: 100%;
+  background: linear-gradient(180deg, #34d399, #7c3aed);
+  border-radius: 4px 4px 0 0;
+  min-height: 4px;
+  transition: height 0.3s ease;
+}
+
+.kp-bar-val {
+  font-size: 8px;
+  color: #6b7280;
+}
+
+/* KP FORECAST LIST */
+.kp-forecast-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.forecast-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.forecast-time {
+  font-size: 13px;
+  color: #a78bfa;
+  width: 45px;
+  flex-shrink: 0;
+}
+
+.forecast-bar-wrap {
+  flex: 1;
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.forecast-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #7c3aed, #34d399);
+  border-radius: 20px;
+}
+
+.forecast-kp {
+  font-size: 14px;
+  font-weight: 600;
+  width: 30px;
+  text-align: right;
+}

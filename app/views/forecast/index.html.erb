@@ -1,2 +1,73 @@
-<h1>Forecast#index</h1>
-<p>Find me in app/views/forecast/index.html.erb</p>
+<div class="page-container">
+
+  <div class="page-header">
+    <%= link_to root_path, class: "back-btn" do %>
+      ← Back
+    <% end %>
+    <h1 class="page-title">🔭 Forecast</h1>
+  </div>
+
+  <% if @error %>
+    <div class="error-card">
+      <p>Unable to load forecast data. Please try again.</p>
+    </div>
+  <% else %>
+
+    <div class="forecast-card">
+      <div class="forecast-label">KP Index Now</div>
+      <div class="kp-big <%= @kp_current >= 5 ? 'kp-high' : @kp_current >= 3 ? 'kp-medium' : 'kp-low' %>">
+        <%= @kp_current %>
+      </div>
+      <div class="kp-advice">
+        <% if @kp_current >= 5 %>
+          <span class="advice-good">✅ Aurora likely visible at mid latitudes!</span>
+        <% elsif @kp_current >= 3 %>
+          <span class="advice-medium">⚠️ Aurora possible at high latitudes</span>
+        <% else %>
+          <span class="advice-bad">❌ Aurora unlikely — KP too low</span>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="forecast-card">
+      <div class="forecast-label">☁️ Cloud Cover</div>
+      <div class="cloud-bar-container">
+        <div class="cloud-bar" style="width: <%= @cloud_cover %>%"></div>
+      </div>
+      <div class="cloud-value"><%= @cloud_cover %>%</div>
+    </div>
+
+    <div class="forecast-card">
+      <div class="forecast-label">📈 KP History — Last 24h</div>
+      <div class="kp-chart">
+        <% @kp_history.each do |entry| %>
+          <div class="kp-bar-wrap">
+            <div class="kp-bar" style="height: <%= [(entry[:kp] / 9.0 * 100).round, 5].max %>%"
+              title="<%= entry[:time] %>: KP <%= entry[:kp] %>">
+            </div>
+            <span class="kp-bar-val"><%= entry[:kp] %></span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="forecast-card">
+      <div class="forecast-label">🔮 KP Forecast — Next 6 hours</div>
+      <div class="kp-forecast-list">
+        <% @kp_forecast.each do |entry| %>
+          <div class="forecast-item">
+            <span class="forecast-time"><%= Time.parse(entry[:time]).strftime("%H:%M") rescue entry[:time] %></span>
+            <div class="forecast-bar-wrap">
+              <div class="forecast-bar" style="width: <%= [(entry[:kp] / 9.0 * 100).round, 5].max %>%"></div>
+            </div>
+            <span class="forecast-kp <%= entry[:kp] >= 5 ? 'kp-high' : entry[:kp] >= 3 ? 'kp-medium' : 'kp-low' %>">
+              <%= entry[:kp] %>
+            </span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% end %>
+
+</div>

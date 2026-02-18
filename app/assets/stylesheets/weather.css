@@ -1,0 +1,80 @@
+
+/* WEATHER */
+.weather-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid #7c3aed;
+  border-radius: 20px;
+  padding: 24px;
+  backdrop-filter: blur(10px);
+}
+
+.weather-location {
+  font-size: 14px;
+  color: #a78bfa;
+  margin-bottom: 16px;
+}
+
+.weather-main {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.weather-temp {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 48px;
+  color: #34d399;
+}
+
+.weather-desc {
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.weather-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.weather-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.weather-label {
+  font-size: 11px;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.weather-value {
+  font-size: 18px;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.aurora-advice {
+  text-align: center;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  font-size: 14px;
+}
+
+.advice-good { color: #34d399; }
+.advice-medium { color: #f59e0b; }
+.advice-bad { color: #ef4444; }
+
+.error-card {
+  background: rgba(239,68,68,0.1);
+  border: 1px solid #ef4444;
+  border-radius: 20px;
+  padding: 24px;
+  text-align: center;
+  color: #ef4444;
+}

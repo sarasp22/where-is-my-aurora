@@ -165,3 +165,32 @@ body {
     radial-gradient(1px 1px at 85% 75%, rgba(255,255,255,0.3) 0%, transparent 100%),
     radial-gradient(1px 1px at 50% 40%, rgba(255,255,255,0.2) 0%, transparent 100%);
 }
+
+.page-container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0a0a1a 0%, #0d0d2b 100%);
+  padding: 60px 20px 40px;
+  overflow-y: auto;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.back-btn {
+  color: #a78bfa;
+  text-decoration: none;
+  font-size: 14px;
+  border: 1px solid #7c3aed;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+.page-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px;
+  color: #ffffff;
+}
