@@ -1,2 +1,76 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<div id="map"></div>
+
+<div class="stars-overlay"></div>
+
+<div class="top-bar">
+  <div class="kp-badge">
+    KP NOW <span id="kp-value">--</span>
+  </div>
+  <%= link_to auroras_path, class: "list-btn" do %>
+    🌌 Sightings
+  <% end %>
+</div>
+
+<div class="bottom-nav">
+  <%= link_to weather_path, class: "nav-btn" do %>
+    <span>🌤️</span>
+    <span>Weather</span>
+  <% end %>
+
+  <%= link_to new_aurora_path, class: "nav-btn-main" do %>
+    ✦
+  <% end %>
+
+  <%= link_to forecast_path, class: "nav-btn" do %>
+    <span>🔭</span>
+    <span>Forecast</span>
+  <% end %>
+</div>
+
+<script>
+const map = L.map('map', { zoomControl: false }).setView([20, 0], 2);
+setTimeout(() => { map.invalidateSize(); }, 100);
+
+L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/256/{z}/{x}/{y}@2x?access_token=<%= ENV["MAPBOX_API_KEY"] %>', {
+    attribution: '© <a href="https://www.mapbox.com/">Mapbox</a> © <a href="https://www.openstreetmap.org/">OpenStreetMap</a>',
+    tileSize: 256,
+    maxZoom: 19
+}).addTo(map);
+
+  const auroras = <%= raw @auroras_json %>;
+
+  auroras.forEach(aurora => {
+    const el = document.createElement('div');
+    el.className = 'aurora-ping';
+
+    L.marker([aurora.lat, aurora.lng], {
+      icon: L.divIcon({ className: '', html: el.outerHTML, iconSize: [40, 40] })
+    })
+    .addTo(map)
+    .bindPopup(`<b>Aurora avvistata</b><br>${aurora.description || 'Nessuna descrizione'}`);
+  });
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(pos => {
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+
+      map.setView([lat, lng], 6);
+
+      fetch('/geolocation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({ latitude: lat, longitude: lng })
+      });
+
+      fetch(`/forecast/kp_now?lat=${lat}&lng=${lng}`)
+        .then(r => r.json())
+        .then(data => {
+          document.getElementById('kp-value').textContent = data.kp ?? '--';
+        });
+    });
+  }
+</script>
