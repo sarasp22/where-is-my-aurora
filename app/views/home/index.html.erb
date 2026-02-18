@@ -20,6 +20,7 @@
     </div>
   </div>
 </div>
+
 <div class="bottom-nav">
   <%= link_to weather_path, class: "nav-btn" do %>
     <span>🌤️</span>
@@ -37,14 +38,14 @@
 </div>
 
 <script>
-const map = L.map('map', { zoomControl: false }).setView([20, 0], 2);
-setTimeout(() => { map.invalidateSize(); }, 100);
+  const map = L.map('map', { zoomControl: false }).setView([20, 0], 2);
+  setTimeout(() => { map.invalidateSize(); }, 100);
 
-L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/256/{z}/{x}/{y}@2x?access_token=<%= ENV["MAPBOX_API_KEY"] %>', {
+  L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/256/{z}/{x}/{y}@2x?access_token=<%= ENV["MAPBOX_API_KEY"] %>', {
     attribution: '© <a href="https://www.mapbox.com/">Mapbox</a> © <a href="https://www.openstreetmap.org/">OpenStreetMap</a>',
     tileSize: 256,
     maxZoom: 19
-}).addTo(map);
+  }).addTo(map);
 
   const auroras = <%= raw @auroras_json %>;
 
@@ -57,22 +58,23 @@ L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/256/{z}/{x}/
     })
     .addTo(map)
     .bindPopup(`
-  <div style="font-family:'Inter',sans-serif; min-width:150px;">
-    <div style="color:#34d399; font-weight:600; margin-bottom:4px;">
-      🌌 Aurora spotted
-    </div>
-    <div style="color:#a78bfa; font-size:12px; margin-bottom:6px;">
-      ⏱ ${aurora.minutes_ago === 0 ? 'Just now' : aurora.minutes_ago + ' min ago'}
-    </div>
-    ${aurora.description
-      ? `<div style="color:#ffffff; font-size:13px; margin-bottom:8px;">${aurora.description}</div>`
-      : `<div style="color:#6b7280; font-size:12px; font-style:italic; margin-bottom:8px;">No description added</div>`
-    }
-    <a href="/auroras/${aurora.id}" style="display:block; text-align:center; background: linear-gradient(135deg, #7c3aed, #34d399); color:white; padding:6px 12px; border-radius:8px; font-size:12px; text-decoration:none;">
-      View details →
-    </a>
-  </div>
-`);
+      <div style="font-family:'Inter',sans-serif; min-width:150px;">
+        <div style="color:#34d399; font-weight:600; margin-bottom:4px;">
+          🌌 Aurora spotted
+        </div>
+        <div style="color:#a78bfa; font-size:12px; margin-bottom:6px;">
+          ⏱ ${aurora.minutes_ago === 0 ? 'Just now' : aurora.minutes_ago + ' min ago'}
+        </div>
+        ${aurora.description
+          ? `<div style="color:#ffffff; font-size:13px; margin-bottom:8px;">${aurora.description}</div>`
+          : `<div style="color:#6b7280; font-size:12px; font-style:italic; margin-bottom:8px;">No description added</div>`
+        }
+        <a href="/auroras/${aurora.id}" style="display:block; text-align:center; background: linear-gradient(135deg, #7c3aed, #34d399); color:white; padding:6px 12px; border-radius:8px; font-size:12px; text-decoration:none;">
+          View details →
+        </a>
+      </div>
+    `);
+  });
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(pos => {
@@ -98,37 +100,37 @@ L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/256/{z}/{x}/
     });
   }
 
-const sightingsList = document.getElementById('sightings-list');
-if (auroras.length > 0) {
-  sightingsList.innerHTML = auroras.map(a => `
-  <a href="/auroras/${a.id}" class="sighting-item">
-    <span class="sighting-dot">🌌</span>
-    <div class="sighting-info">
-      <span class="sighting-time">
-        ${a.minutes_ago === 0 ? 'Just now' : a.minutes_ago + ' min ago'}
-      </span>
-      ${a.description
-        ? `<span class="sighting-desc">${a.description}</span>`
-        : `<span class="sighting-desc no-desc">No description</span>`
-      }
-    </div>
-  </a>
-`).join('');
-}
-
-function toggleSightings() {
-  const dropdown = document.getElementById('sightings-dropdown');
-  const arrow = document.getElementById('sightings-arrow');
-  const isOpen = dropdown.classList.contains('open');
-  dropdown.classList.toggle('open');
-  arrow.textContent = isOpen ? '▼' : '▲';
-}
-
-document.addEventListener('click', e => {
-  const wrapper = document.querySelector('.sightings-wrapper');
-  if (!wrapper.contains(e.target)) {
-    document.getElementById('sightings-dropdown').classList.remove('open');
-    document.getElementById('sightings-arrow').textContent = '▼';
+  const sightingsList = document.getElementById('sightings-list');
+  if (auroras.length > 0) {
+    sightingsList.innerHTML = auroras.map(a => `
+      <a href="/auroras/${a.id}" class="sighting-item">
+        <span class="sighting-dot">🌌</span>
+        <div class="sighting-info">
+          <span class="sighting-time">
+            ${a.minutes_ago === 0 ? 'Just now' : a.minutes_ago + ' min ago'}
+          </span>
+          ${a.description
+            ? `<span class="sighting-desc">${a.description}</span>`
+            : `<span class="sighting-desc no-desc">No description</span>`
+          }
+        </div>
+      </a>
+    `).join('');
   }
-});
+
+  function toggleSightings() {
+    const dropdown = document.getElementById('sightings-dropdown');
+    const arrow = document.getElementById('sightings-arrow');
+    const isOpen = dropdown.classList.contains('open');
+    dropdown.classList.toggle('open');
+    arrow.textContent = isOpen ? '▼' : '▲';
+  }
+
+  document.addEventListener('click', e => {
+    const wrapper = document.querySelector('.sightings-wrapper');
+    if (!wrapper.contains(e.target)) {
+      document.getElementById('sightings-dropdown').classList.remove('open');
+      document.getElementById('sightings-arrow').textContent = '▼';
+    }
+  });
 </script>

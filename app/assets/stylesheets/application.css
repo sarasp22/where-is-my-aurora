@@ -27,6 +27,14 @@ body {
   overflow: hidden;
 }
 
+.page-container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0a0a1a 0%, #0d0d2b 100%);
+  padding: 60px 20px 40px;
+  overflow-y: auto;
+  height: 100vh;
+}
+
 #map {
   position: fixed;
   top: 0;
@@ -164,13 +172,6 @@ body {
     radial-gradient(1px 1px at 70% 15%, rgba(255,255,255,0.4) 0%, transparent 100%),
     radial-gradient(1px 1px at 85% 75%, rgba(255,255,255,0.3) 0%, transparent 100%),
     radial-gradient(1px 1px at 50% 40%, rgba(255,255,255,0.2) 0%, transparent 100%);
-}
-
-.page-container {
-  min-height: 100vh;
-  background: linear-gradient(180deg, #0a0a1a 0%, #0d0d2b 100%);
-  padding: 60px 20px 40px;
-  overflow-y: auto;
 }
 
 .page-header {

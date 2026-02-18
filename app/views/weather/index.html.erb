@@ -16,7 +16,7 @@
 
       <div class="weather-main">
         <span class="weather-temp"><%= @weather["main"]["temp"].round %>°C</span>
-        <span class="weather-desc"><%= @weather["weather"][0]["description"].capitalize %></span>
+        <span class="weather-desc"><%= weather_emoji(@weather["weather"][0]["id"]) %></span>
       </div>
 
       <div class="weather-grid">
