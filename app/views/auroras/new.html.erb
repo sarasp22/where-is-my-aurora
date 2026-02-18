@@ -29,21 +29,31 @@
     </div>
 
     <!-- Foto -->
-    <div class="form-card">
-      <div class="form-label">📸 Photo (optional)</div>
-      <div class="photo-upload-area" id="photo-area">
-        <input type="file" name="aurora[photo]" id="aurora_photo"
-               accept="image/*" capture="environment"
-               class="photo-input" onchange="previewPhoto(this)">
-        <label for="aurora_photo" class="photo-label">
-          <div id="photo-preview-container">
-            <span class="photo-icon">📷</span>
-            <span class="photo-text">Take a photo or choose from gallery</span>
-          </div>
-        </label>
-        <img id="photo-preview" src="" style="display:none; width:100%; border-radius:12px; margin-top:12px;">
-      </div>
-    </div>
+<div class="form-card">
+  <div class="form-label">📸 Photo (optional)</div>
+
+  <div class="photo-buttons">
+    <!-- Scatta foto con fotocamera -->
+    <input type="file" name="aurora[photo]" id="aurora_photo_camera"
+           accept="image/*" capture="environment"
+           class="photo-input" onchange="previewPhoto(this)">
+    <label for="aurora_photo_camera" class="photo-btn">
+      <span>📷</span>
+      <span>Take Photo</span>
+    </label>
+
+    <!-- Scegli dalla galleria -->
+    <input type="file" name="aurora[photo]" id="aurora_photo_gallery"
+           accept="image/*"
+           class="photo-input" onchange="previewPhoto(this)">
+    <label for="aurora_photo_gallery" class="photo-btn">
+      <span>🖼️</span>
+      <span>Gallery</span>
+    </label>
+  </div>
+
+  <img id="photo-preview" src="" style="display:none;" >
+</div>
 
     <!-- Submit -->
     <button type="submit" class="submit-btn">
