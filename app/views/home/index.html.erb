@@ -38,6 +38,9 @@
 </div>
 
 <script>
+  document.addEventListener('turbo:load', () => {
+  if (document.getElementById('map')._leaflet_id) return;
+
   const map = L.map('map', { zoomControl: false }).setView([20, 0], 2);
   setTimeout(() => { map.invalidateSize(); }, 100);
 
