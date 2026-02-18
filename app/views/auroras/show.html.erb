@@ -7,12 +7,10 @@
     <h1 class="page-title">🌌 Aurora Sighting</h1>
   </div>
 
-  <!-- Mappa con ping -->
   <div class="show-card" style="padding: 0; overflow: hidden;">
     <div id="aurora-map" style="height: 220px; width: 100%; border-radius: 20px;"></div>
   </div>
 
-  <!-- Info principali -->
   <div class="show-card">
     <div class="show-row">
       <span class="show-label">⏱ Spotted</span>
@@ -26,9 +24,14 @@
         <%= @aurora.latitude.round(4) %>, <%= @aurora.longitude.round(4) %>
       </span>
     </div>
+    <% if @distance_km %>
+      <div class="show-row">
+        <span class="show-label">📏 Distance</span>
+        <span class="show-value"><%= @distance_km %> km from you</span>
+      </div>
+    <% end %>
   </div>
 
-  <!-- Commento -->
   <% if @aurora.description.present? %>
     <div class="show-card">
       <div class="show-label">💬 Description</div>
@@ -36,7 +39,6 @@
     </div>
   <% end %>
 
-  <!-- Foto -->
   <% if @aurora.photo.attached? %>
     <div class="show-card" style="padding: 0; overflow: hidden;">
       <%= image_tag @aurora.photo, style: "width: 100%; border-radius: 20px; display: block;" %>
