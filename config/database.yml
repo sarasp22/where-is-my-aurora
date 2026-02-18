@@ -82,3 +82,4 @@ production:
   database: where_is_my_aurora_production
   username: where_is_my_aurora
   password: <%= ENV["WHERE_IS_MY_AURORA_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>

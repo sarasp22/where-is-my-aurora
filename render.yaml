@@ -1,0 +1,24 @@
+databases:
+  - name: where_is_my_aurora_db
+    databaseName: where_is_my_aurora
+    user: aurora_user
+    plan: free
+
+services:
+  - type: web
+    name: where-is-my-aurora
+    env: ruby
+    plan: free
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: where_is_my_aurora_db
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: MAPBOX_API_KEY
+        sync: false
+      - key: OPENWEATHER_API_KEY
+        sync: false
