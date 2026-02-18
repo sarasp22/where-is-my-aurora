@@ -3,9 +3,10 @@ class AurorasController < ApplicationController
     @auroras = Aurora.active.recent
   end
 
-  def show
-    @aurora = Aurora.find(params[:id])
-  end
+def show
+  @aurora = Aurora.find(params[:id])
+  @minutes_ago = ((Time.current - @aurora.submitted_at) / 60).floor
+end
 
   def new
     @aurora = Aurora.new

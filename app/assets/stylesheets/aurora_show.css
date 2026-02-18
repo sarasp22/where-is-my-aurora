@@ -1,0 +1,46 @@
+/* AURORA SHOW */
+.show-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid #7c3aed;
+  border-radius: 20px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  margin-bottom: 16px;
+}
+
+.show-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+}
+
+.show-row:last-child {
+  border-bottom: none;
+}
+
+.show-label {
+  font-size: 12px;
+  color: #a78bfa;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.show-value {
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.show-value.green {
+  color: #34d399;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.show-description {
+  font-size: 15px;
+  color: #ffffff;
+  line-height: 1.6;
+  margin-top: 10px;
+}

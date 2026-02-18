@@ -1,2 +1,69 @@
-<h1>Auroras#show</h1>
-<p>Find me in app/views/auroras/show.html.erb</p>
+<div class="page-container">
+
+  <div class="page-header">
+    <%= link_to root_path, class: "back-btn" do %>
+      ← Back
+    <% end %>
+    <h1 class="page-title">🌌 Aurora Sighting</h1>
+  </div>
+
+  <!-- Mappa con ping -->
+  <div class="show-card" style="padding: 0; overflow: hidden;">
+    <div id="aurora-map" style="height: 220px; width: 100%; border-radius: 20px;"></div>
+  </div>
+
+  <!-- Info principali -->
+  <div class="show-card">
+    <div class="show-row">
+      <span class="show-label">⏱ Spotted</span>
+      <span class="show-value green">
+        <%= @minutes_ago == 0 ? 'Just now' : "#{@minutes_ago} min ago" %>
+      </span>
+    </div>
+    <div class="show-row">
+      <span class="show-label">📍 Coordinates</span>
+      <span class="show-value">
+        <%= @aurora.latitude.round(4) %>, <%= @aurora.longitude.round(4) %>
+      </span>
+    </div>
+  </div>
+
+  <!-- Commento -->
+  <% if @aurora.description.present? %>
+    <div class="show-card">
+      <div class="show-label">💬 Description</div>
+      <div class="show-description"><%= @aurora.description %></div>
+    </div>
+  <% end %>
+
+  <!-- Foto -->
+  <% if @aurora.photo.attached? %>
+    <div class="show-card" style="padding: 0; overflow: hidden;">
+      <%= image_tag @aurora.photo, style: "width: 100%; border-radius: 20px; display: block;" %>
+    </div>
+  <% end %>
+
+</div>
+
+<script>
+  const map = L.map('aurora-map', {
+    zoomControl: false,
+    dragging: false,
+    scrollWheelZoom: false,
+    doubleClickZoom: false,
+    touchZoom: false
+  }).setView([<%= @aurora.latitude %>, <%= @aurora.longitude %>], 12);
+
+  L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/256/{z}/{x}/{y}@2x?access_token=<%= ENV["MAPBOX_API_KEY"] %>', {
+    attribution: '© Mapbox © OpenStreetMap',
+    maxZoom: 19
+  }).addTo(map);
+
+  setTimeout(() => { map.invalidateSize(); }, 100);
+
+  const el = document.createElement('div');
+  el.className = 'aurora-ping';
+  L.marker([<%= @aurora.latitude %>, <%= @aurora.longitude %>], {
+    icon: L.divIcon({ className: '', html: el.outerHTML, iconSize: [40, 40] })
+  }).addTo(map);
+</script>

@@ -194,3 +194,91 @@ body {
   font-size: 20px;
   color: #ffffff;
 }
+
+.sightings-wrapper {
+  position: relative;
+}
+
+.sightings-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 260px;
+  background: rgba(10, 10, 26, 0.95);
+  border: 1px solid #7c3aed;
+  border-radius: 16px;
+  padding: 16px;
+  backdrop-filter: blur(20px);
+  z-index: 200;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.sightings-dropdown.open {
+  display: block;
+}
+
+.sightings-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  color: #a78bfa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.sighting-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+  border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+  text-decoration: none;
+}
+
+.sighting-item:last-child {
+  border-bottom: none;
+}
+
+.sighting-item:hover {
+  background: rgba(124, 58, 237, 0.15);
+}
+
+.sighting-dot {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.sighting-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sighting-time {
+  font-size: 13px;
+  color: #34d399;
+  font-weight: 600;
+}
+
+.sighting-desc {
+  font-size: 12px;
+  color: #ffffff;
+}
+
+.sighting-desc.no-desc {
+  color: #6b7280;
+  font-style: italic;
+}
+
+.sighting-empty {
+  font-size: 13px;
+  color: #6b7280;
+  text-align: center;
+  padding: 12px 0;
+  font-style: italic;
+}

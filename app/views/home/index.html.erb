@@ -6,11 +6,20 @@
   <div class="kp-badge">
     KP NOW <span id="kp-value">--</span>
   </div>
-  <%= link_to auroras_path, class: "list-btn" do %>
-    🌌 Sightings
-  <% end %>
-</div>
 
+  <div class="sightings-wrapper">
+    <button class="list-btn" onclick="toggleSightings()">
+      🌌 Sightings <span id="sightings-arrow">▼</span>
+    </button>
+
+    <div class="sightings-dropdown" id="sightings-dropdown">
+      <div class="sightings-title">Recent Sightings</div>
+      <div id="sightings-list">
+        <div class="sighting-empty">No sightings in the last 30 minutes</div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="bottom-nav">
   <%= link_to weather_path, class: "nav-btn" do %>
     <span>🌤️</span>
@@ -56,12 +65,14 @@ L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/256/{z}/{x}/
       ⏱ ${aurora.minutes_ago === 0 ? 'Just now' : aurora.minutes_ago + ' min ago'}
     </div>
     ${aurora.description
-      ? `<div style="color:#ffffff; font-size:13px;">${aurora.description}</div>`
-      : `<div style="color:#6b7280; font-size:12px; font-style:italic;">No description added</div>`
+      ? `<div style="color:#ffffff; font-size:13px; margin-bottom:8px;">${aurora.description}</div>`
+      : `<div style="color:#6b7280; font-size:12px; font-style:italic; margin-bottom:8px;">No description added</div>`
     }
+    <a href="/auroras/${aurora.id}" style="display:block; text-align:center; background: linear-gradient(135deg, #7c3aed, #34d399); color:white; padding:6px 12px; border-radius:8px; font-size:12px; text-decoration:none;">
+      View details →
+    </a>
   </div>
 `);
-  });
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(pos => {
@@ -86,4 +97,38 @@ L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/256/{z}/{x}/
         });
     });
   }
+
+const sightingsList = document.getElementById('sightings-list');
+if (auroras.length > 0) {
+  sightingsList.innerHTML = auroras.map(a => `
+  <a href="/auroras/${a.id}" class="sighting-item">
+    <span class="sighting-dot">🌌</span>
+    <div class="sighting-info">
+      <span class="sighting-time">
+        ${a.minutes_ago === 0 ? 'Just now' : a.minutes_ago + ' min ago'}
+      </span>
+      ${a.description
+        ? `<span class="sighting-desc">${a.description}</span>`
+        : `<span class="sighting-desc no-desc">No description</span>`
+      }
+    </div>
+  </a>
+`).join('');
+}
+
+function toggleSightings() {
+  const dropdown = document.getElementById('sightings-dropdown');
+  const arrow = document.getElementById('sightings-arrow');
+  const isOpen = dropdown.classList.contains('open');
+  dropdown.classList.toggle('open');
+  arrow.textContent = isOpen ? '▼' : '▲';
+}
+
+document.addEventListener('click', e => {
+  const wrapper = document.querySelector('.sightings-wrapper');
+  if (!wrapper.contains(e.target)) {
+    document.getElementById('sightings-dropdown').classList.remove('open');
+    document.getElementById('sightings-arrow').textContent = '▼';
+  }
+});
 </script>
