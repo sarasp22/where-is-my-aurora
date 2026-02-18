@@ -12,10 +12,13 @@ class ForecastController < ApplicationController
       http.use_ssl = true
       response_kp = http.request(Net::HTTP::Get.new(uri_kp))
       kp_data = JSON.parse(response_kp.body)
-      @kp_current = kp_data.last["kp_index"].round(1)
+
+      kp_last = kp_data.last["kp_index"]
+      @kp_current = kp_last ? kp_last.round(1) : 0
 
       @kp_history = kp_data.last(24).map do |entry|
-        { time: entry["time_tag"], kp: entry["kp_index"].round(1) }
+        kp = entry["kp_index"]
+        { time: entry["time_tag"], kp: kp ? kp.round(1) : 0 }
       end
 
       uri_forecast = URI('https://services.swpc.noaa.gov/json/geospace/geospace_pred_est_kp_1_hour.json')
@@ -23,8 +26,10 @@ class ForecastController < ApplicationController
       http2.use_ssl = true
       response_forecast = http2.request(Net::HTTP::Get.new(uri_forecast))
       forecast_data = JSON.parse(response_forecast.body)
+
       @kp_forecast = forecast_data.first(6).map do |entry|
-        { time: entry["time_tag"], kp: entry["kp_index"].round(1) }
+        kp = entry["kp_index"]
+        { time: entry["time_tag"], kp: kp ? kp.round(1) : 0 }
       end
 
       api_key = ENV["OPENWEATHER_API_KEY"]
@@ -37,6 +42,8 @@ class ForecastController < ApplicationController
 
     rescue => e
       @error = e.message
+      Rails.logger.error "FORECAST ERROR: #{e.message}"
+      Rails.logger.error e.backtrace.join("\n")
     end
   end
 
@@ -51,7 +58,7 @@ class ForecastController < ApplicationController
       response = http.request(Net::HTTP::Get.new(uri))
       data = JSON.parse(response.body)
       latest = data.last
-      kp = latest ? latest['kp_index'].round(1) : nil
+      kp = latest ? latest['kp_index']&.round(1) : nil
       render json: { kp: kp }
     rescue => e
       render json: { kp: nil, error: e.message }
